@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="dns-prefetch" href="https://shipengfei92.github.io/">
+  <title>notes for Coursera - SQL for data science | Pengfei Shi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Week 1： Getting Started and Selecting &amp;amp; Retrieving Data with SQLIntroductionWhat is SQL?Structured Query Language (SQL) is a standard computer language for relational database management and data">
+<meta property="og:type" content="article">
+<meta property="og:title" content="notes for Coursera - SQL for data science">
+<meta property="og:url" content="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/index.html">
+<meta property="og:site_name" content="Pengfei Shi">
+<meta property="og:description" content="Week 1： Getting Started and Selecting &amp;amp; Retrieving Data with SQLIntroductionWhat is SQL?Structured Query Language (SQL) is a standard computer language for relational database management and data">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/er-diagram.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/er-notation.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/operators.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/wildcards1.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/wildcards2.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/aggregate.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/key.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/joins.png">
+<meta property="og:image" content="https://shipengfei92.github.io/../assets/img/ChinookDatabaseSchema.png">
+<meta property="og:updated_time" content="2018-03-27T01:21:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="notes for Coursera - SQL for data science">
+<meta name="twitter:description" content="Week 1： Getting Started and Selecting &amp;amp; Retrieving Data with SQLIntroductionWhat is SQL?Structured Query Language (SQL) is a standard computer language for relational database management and data">
+<meta name="twitter:image" content="https://shipengfei92.github.io/../assets/img/er-diagram.png">
+  
+    <link rel="alternative" href="https://shipengfei92.github.io/atom.xml" title="Pengfei Shi" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://shipengfei92.github.io/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" type="text/css" href="./SQL for Data Science - notes_files/main.234bc0.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+<script type="text/javascript" async="" src="https://static.duoshuo.com/embed.js" charset="UTF-8"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body><div id="MathJax_Message" style="display: none;"></div>
+  <div id="container" q-class="show:isCtnShow" style="height: 878px;">
+    <canvas id="anm-canvas" class="anm-canvas" width="958" height="878"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="https://shipengfei92.github.io/" class="profilepic">
+			<img src="./SQL for Data Science - notes_files/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="https://shipengfei92.github.io/">Pengfei Shi</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="https://shipengfei92.github.io/">Home Page</a></li>
+	        
+				<li><a href="https://shipengfei92.github.io/tags/Conformal-Geometry/">Conformal Geometry</a></li>
+	        
+				<li><a href="https://shipengfei92.github.io/tags/Cloud-Computing/">Cloud Computing</a></li>
+	        
+				<li><a href="https://shipengfei92.github.io/tags/Deep-Learning/">Deep Learning</a></li>
+	        
+				<li><a href="https://shipengfei92.github.io/tags/HFT/">High-frequency Trading</a></li>
+	        
+				<li><a href="https://shipengfei92.github.io/tags/Blog/">Blog</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, &#39;innerArchive&#39;)" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, &#39;friends&#39;)" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, &#39;aboutme&#39;)" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/shipengfei92" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="mail" target="_blank" href="mailto:shipengfei92@gmail.com" title="mail"><i class="icon-mail"></i></a>
+		        
+					<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/pengfei-shi-574b1799" title="linkedin"><i class="icon-linkedin"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="./SQL for Data Science - notes_files/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">Pengfei Shi</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/shipengfei92" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="mail" target="_blank" href="mailto:shipengfei92@gmail.com" title="mail"><i class="icon-mail"></i></a>
+			        
+						<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/pengfei-shi-574b1799" title="linkedin"><i class="icon-linkedin"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 16.666666666666668%"><a href="https://shipengfei92.github.io/">Home Page</a></li>
+		        
+					<li style="width: 16.666666666666668%"><a href="https://shipengfei92.github.io/tags/Conformal-Geometry/">Conformal Geometry</a></li>
+		        
+					<li style="width: 16.666666666666668%"><a href="https://shipengfei92.github.io/tags/Cloud-Computing/">Cloud Computing</a></li>
+		        
+					<li style="width: 16.666666666666668%"><a href="https://shipengfei92.github.io/tags/Deep-Learning/">Deep Learning</a></li>
+		        
+					<li style="width: 16.666666666666668%"><a href="https://shipengfei92.github.io/tags/HFT/">High-frequency Trading</a></li>
+		        
+					<li style="width: 16.666666666666668%"><a href="https://shipengfei92.github.io/tags/Blog/">Blog</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-SQL-for-data-science" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      notes for Coursera - SQL for data science
+    </h1>
+  
+
+        
+        <a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/" class="archive-article-date">
+  	<time datetime="2018-02-05T06:06:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Week-1：-Getting-Started-and-Selecting-amp-Retrieving-Data-with-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Week-1%EF%BC%9A-Getting-Started-and-Selecting-amp-Retrieving-Data-with-SQL" class="headerlink" title="Week 1： Getting Started and Selecting &amp; Retrieving Data with SQL"></a>Week 1： Getting Started and Selecting &amp; Retrieving Data with SQL</h1><h2 id="Introduction"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="What-is-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#What-is-SQL" class="headerlink" title="What is SQL?"></a>What is SQL?</h3><p>Structured Query Language (SQL) is a standard computer language for relational database management and data manipulation.</p>
+<p>Used to <strong>query, insert, update</strong> and <strong>modify</strong> data.</p>
+<p>Pronounced as “sequel” or S-Q-L.</p>
+<p>Used to communicate with databases;</p>
+<p>SQL is non-procedural language:</p>
+<ul>
+<li><p>Cannot write complete applications</p>
+</li>
+<li><p>Simple, but powerful</p>
+</li>
+</ul>
+<h3 id="How-is-SQL-used"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#How-is-SQL-used" class="headerlink" title="How is SQL used?"></a>How is SQL used?</h3><p>Read/retrieve data</p>
+<p>Write data - add data to a table;</p>
+<p>Update data - insert new data;</p>
+<h3 id="Who-uses-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Who-uses-SQL" class="headerlink" title="Who uses SQL?"></a>Who uses SQL?</h3><ul>
+<li>Backend Developer</li>
+<li>Data Architect</li>
+<li>QA Engineer</li>
+<li>ETL Developer</li>
+<li>Database Admin (DBA)</li>
+<li>Data analyst</li>
+<li>System Admin</li>
+<li>System Engineer</li>
+<li>Data Scientist</li>
+</ul>
+<h3 id="DBA-or-Data-Scientist"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#DBA-or-Data-Scientist" class="headerlink" title="DBA or Data Scientist"></a>DBA or Data Scientist</h3><table>
+<thead>
+<tr>
+<th>DBA</th>
+<th>Data Scientist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Manages/governs entire database</td>
+<td>End user of a database</td>
+</tr>
+<tr>
+<td>Gives permissions to users</td>
+<td>Use SQL to query and retrieve data</td>
+</tr>
+<tr>
+<td>Determines access to data</td>
+<td></td>
+</tr>
+<tr>
+<td>Manages and creates tables</td>
+<td></td>
+</tr>
+<tr>
+<td>Uses SQL to query and retrieve data</td>
+</tr>
+</tbody>
+</table>
+<h4 id="How-do-data-scientists-use-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#How-do-data-scientists-use-SQL" class="headerlink" title="How do data scientists use SQL?"></a>How do data scientists use SQL?</h4><p>Retrieve data;</p>
+<p>May create their own table or test enviroments;</p>
+<p>Combine multiple sources together;</p>
+<p>Write complex queries for analysis.</p>
+<h3 id="Relational-Database-Management-Systems"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Relational-Database-Management-Systems" class="headerlink" title="Relational Database Management Systems"></a>Relational Database Management Systems</h3><ul>
+<li>SQL Server</li>
+<li>IBM DB2 Oracle</li>
+<li>Sybase ASE</li>
+<li>PostgreSQL</li>
+<li>MySQL</li>
+<li>Microsoft SQL Server</li>
+<li>Apache Open Office Base</li>
+<li>SQLite</li>
+</ul>
+<p>Write syntax depends on what DBMS you are using.</p>
+<p>Each DBMS has its own <strong>dialect</strong>.</p>
+<p>SQL can translate.</p>
+<p>Tweak based on the <strong>dialect</strong> your DBMS speaks.</p>
+<h2 id="Data-Models"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Data-Models" class="headerlink" title="Data Models"></a>Data Models</h2><h3 id="Thinking-about-your-data"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Thinking-about-your-data" class="headerlink" title="Thinking about your data"></a>Thinking about your data</h3><p>Understand the business process or subject matter the data is modeled after</p>
+<p>Know the bussiness rules</p>
+<p>Understand how your data is organized and structured in the table(modeled).</p>
+<h3 id="Why-this-is-worthwhile"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Why-this-is-worthwhile" class="headerlink" title="Why this is worthwhile"></a>Why this is worthwhile</h3><p>Get more accurate results,</p>
+<p>Speed up your work,</p>
+<p>Have less rework.</p>
+<h3 id="Some-concepts"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Some-concepts" class="headerlink" title="Some concepts"></a>Some concepts</h3><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database</td>
+<td>A container to store organized data</td>
+</tr>
+<tr>
+<td>Tables</td>
+<td>A structured list of data or a specific type</td>
+</tr>
+<tr>
+<td>Column</td>
+<td>A single field in a table</td>
+</tr>
+<tr>
+<td>Row</td>
+<td>A record in a table</td>
+</tr>
+</tbody>
+</table>
+<h3 id="What-is-data-modeling"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#What-is-data-modeling" class="headerlink" title="What is data modeling?"></a>What is data modeling?</h3><p>Organizes and structures information into multiple, related tables.</p>
+<p>Can represent a bussiness process or show relationships between bussiness processes.</p>
+<p>Should closely represent real world.</p>
+<h3 id="Types-of-data-modeling"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Types-of-data-modeling" class="headerlink" title="Types of data modeling"></a>Types of data modeling</h3><p>Models for prediction built by data scientist.</p>
+<p>Data model as data tables represented and organized in a database.</p>
+<h3 id="Evolution-of-data-models"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Evolution-of-data-models" class="headerlink" title="Evolution of data models"></a>Evolution of data models</h3><table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1960</td>
+<td>Hierarchical</td>
+</tr>
+<tr>
+<td>1969</td>
+<td>Network</td>
+</tr>
+<tr>
+<td>1970</td>
+<td>Relational</td>
+</tr>
+<tr>
+<td>1976</td>
+<td>Entity relationship</td>
+</tr>
+<tr>
+<td>1978</td>
+<td>Semantic</td>
+</tr>
+<tr>
+<td>1985</td>
+<td>Object-oriented</td>
+</tr>
+<tr>
+<td>1990</td>
+<td>Extended relational(O/R DBMS)</td>
+</tr>
+<tr>
+<td>2009</td>
+<td>NoSQL - Not only SQL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Relational-vs-Transactional-Models"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Relational-vs-Transactional-Models" class="headerlink" title="Relational vs. Transactional Models"></a>Relational vs. Transactional Models</h2><table>
+<thead>
+<tr>
+<th>Relational Model</th>
+<th>Transactional Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allows for easy querying and data manipulation in an easy, logical and intuitive way.</td>
+<td>Operational database - insurance claims within a healthcare database</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Data-model-building-blocks"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Data-model-building-blocks" class="headerlink" title="Data model building blocks"></a>Data model building blocks</h3><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entity</td>
+<td>Person, place thing or event, Distinguishable, unique and distinct</td>
+</tr>
+<tr>
+<td>Attribute</td>
+<td>A characteristic of an entity</td>
+</tr>
+<tr>
+<td>Relationship</td>
+<td>Describes association among entities.<br> One-to-many,Many-to-many,One-to-one</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>One-to-many: customer to invoices.</li>
+<li>Many-to-many: student to classes.</li>
+<li>One-to-one: manager to store.</li>
+</ul>
+<h2 id="ER-Diagrams"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#ER-Diagrams" class="headerlink" title="ER Diagrams"></a>ER Diagrams</h2><p>ER Model</p>
+<p><img src="./SQL for Data Science - notes_files/er-diagram.png" alt="ER Diagram"></p>
+<ul>
+<li>Show relationships</li>
+<li>Bussiness process</li>
+<li>Represented visually</li>
+<li>Show links (Primary keys)</li>
+</ul>
+<h3 id="Some-examples-of-ER-Diagram"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Some-examples-of-ER-Diagram" class="headerlink" title="Some examples of ER Diagram"></a>Some examples of ER Diagram</h3><p><img src="./SQL for Data Science - notes_files/er-notation.png" alt="ER Diagram"></p>
+<h2 id="Retrieving-data-with-SELECT-statement"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Retrieving-data-with-SELECT-statement" class="headerlink" title="Retrieving data with SELECT statement"></a>Retrieving data with SELECT statement</h2><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> prod_name</div><div class="line"><span class="keyword">FROM</span> Products;</div></pre></td></tr></tbody></table></figure>
+<p>For multiple columns, be sure to use a comma.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> prod_name,prod_id,prod_price</div><div class="line"><span class="keyword">FROM</span> Products;</div></pre></td></tr></tbody></table></figure>
+<p>The following expression is more clearly.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> 	prod_name</div><div class="line">		,prod_id</div><div class="line">		,prod_price</div><div class="line"><span class="keyword">FROM</span> Products;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Retrieving-multiple-columns-using-a-wildcard"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Retrieving-multiple-columns-using-a-wildcard" class="headerlink" title="Retrieving multiple columns using a wildcard"></a>Retrieving multiple columns using a wildcard</h3><p>Request all columns by using a asterisk(*) wildcard character.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> *</div><div class="line"><span class="keyword">FROM</span> Products;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Limit-results"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Limit-results" class="headerlink" title="Limit results"></a>Limit results</h3><p>If the database is very large, we can use <code>LIMIT</code> to limit the number of retrieved results.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> *</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">LIMIT</span> <span class="number">5</span>;</div></pre></td></tr></tbody></table></figure>
+<ul>
+<li>Different Syntaxes</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>Codes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQLite</td>
+<td><figure class="highlight plain"><figcaption><span>prod_name FROM products LIMIT 5;```|</span></figcaption><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">|Oracle|```SELECT prod_name FROM products WHERE ROWNUM &lt;=5;```|</div><div class="line">|DB2|```SELECT prod_name FROM products FETCH FIRST 5 ROWS ONLY;```|</div><div class="line"></div><div class="line"></div><div class="line">## Creating Tables</div><div class="line"></div><div class="line">```sql</div><div class="line">CREATE TABLE Shoes</div><div class="line">(</div><div class="line">Id		char(10)		PRIMARY KEY,</div><div class="line">Brand	char(10)		NOT NULL,</div><div class="line">Price	decimal(8,2)	NOT NULL,</div><div class="line">Desc	Varchar(750)	NULL</div><div class="line">);</div></pre></td></tr></tbody></table></figure></td>
+</tr>
+</tbody>
+</table>
+<h3 id="NULL-and-Primary-Keys"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#NULL-and-Primary-Keys" class="headerlink" title="NULL and Primary Keys"></a>NULL and Primary Keys</h3><p>Every column is either NULL or NOT NULL.</p>
+<p>Primary keys cannot be null, they must have a value.</p>
+<h4 id="Adding-data-to-the-table"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Adding-data-to-the-table" class="headerlink" title="Adding data to the table"></a>Adding data to the table</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Shoes</div><div class="line">(<span class="keyword">Id</span></div><div class="line">,Brand</div><div class="line">,Price</div><div class="line">,<span class="keyword">Desc</span></div><div class="line">)</div><div class="line"><span class="keyword">VALUES</span></div><div class="line">(<span class="string">'12345'</span></div><div class="line">,<span class="string">'Gucci'</span></div><div class="line">,<span class="string">'695.00'</span></div><div class="line">,<span class="literal">NULL</span></div><div class="line">)</div><div class="line">;</div></pre></td></tr></tbody></table></figure>
+<h4 id="Create-a-template-table"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Create-a-template-table" class="headerlink" title="Create a template table"></a>Create a template table</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TEMPORARY</span> <span class="keyword">TABLE</span> Sandals <span class="keyword">AS</span></div><div class="line">(</div><div class="line"><span class="keyword">SELECT</span> *</div><div class="line"><span class="keyword">FROM</span> Shoes</div><div class="line"><span class="keyword">WHERE</span> shoe_type = <span class="string">'sandals'</span></div><div class="line">);</div></pre></td></tr></tbody></table></figure>
+<h2 id="Adding-comments"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Adding-comments" class="headerlink" title="Adding comments"></a>Adding comments</h2><h3 id="Single-line"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Single-line" class="headerlink" title="Single line"></a>Single line</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> shoe_id</div><div class="line"><span class="comment">--,brand_id</span></div><div class="line">,shoe_name</div><div class="line"><span class="keyword">FROM</span> Shoes;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Section"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Section" class="headerlink" title="Section"></a>Section</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> shoe_id</div><div class="line"><span class="comment">/*,brand_id</span></div><div class="line">,shoe_name</div><div class="line">*/</div><div class="line"><span class="keyword">FROM</span> Shoes;</div></pre></td></tr></tbody></table></figure>
+<h1 id="Week-2-Filtering-Sorting-and-Calculating-Data-with-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Week-2-Filtering-Sorting-and-Calculating-Data-with-SQL" class="headerlink" title="Week 2: Filtering, Sorting, and Calculating Data with SQL"></a>Week 2: Filtering, Sorting, and Calculating Data with SQL</h1><h2 id="Introductions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Introductions" class="headerlink" title="Introductions"></a>Introductions</h2><h3 id="Clauses-and-Operators-in-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Clauses-and-Operators-in-SQL" class="headerlink" title="Clauses and Operators in SQL"></a>Clauses and Operators in SQL</h3><ul>
+<li>WHERE</li>
+<li>BETWEEN</li>
+<li>IN</li>
+<li>OR</li>
+<li>NOT</li>
+<li>LIKE</li>
+<li>ORDER BY</li>
+<li>GROUP BY</li>
+</ul>
+<h3 id="Wildcards"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Wildcards" class="headerlink" title="Wildcards"></a>Wildcards</h3><h3 id="Math-Operators"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Math-Operators" class="headerlink" title="Math Operators"></a>Math Operators</h3><ul>
+<li>AVERAGE</li>
+<li>COUNT</li>
+<li>MAX</li>
+<li>MIN</li>
+</ul>
+<h2 id="Basics-of-Filtering-with-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Basics-of-Filtering-with-SQL" class="headerlink" title="Basics of Filtering with SQL"></a>Basics of Filtering with SQL</h2><h3 id="Why"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Why" class="headerlink" title="Why?"></a>Why?</h3><ul>
+<li>Be specific about the data you want to retrieve</li>
+<li>Reduce the number of records you retrieve</li>
+<li>Increase query performance</li>
+<li>Reduce the strain on the client application</li>
+<li>Goverance the limitations</li>
+</ul>
+<h3 id="WHERE-Clause"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#WHERE-Clause" class="headerlink" title="WHERE Clause"></a>WHERE Clause</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> column_name,column_name</div><div class="line"><span class="keyword">FROM</span> table_name</div><div class="line"><span class="keyword">WHERE</span> column_name <span class="keyword">operator</span> <span class="keyword">value</span>;</div></pre></td></tr></tbody></table></figure>
+<p><strong>Some clause operators</strong></p>
+<p><img src="./SQL for Data Science - notes_files/operators.png" alt="Operators"></p>
+<h4 id="Filtering-on-a-single-condition"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Filtering-on-a-single-condition" class="headerlink" title="Filtering on a single condition"></a>Filtering on a single condition</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> ProductName =  <span class="string">'Tofu'</span>;</div></pre></td></tr></tbody></table></figure>
+<h4 id="Filtering-on-a-single-value"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Filtering-on-a-single-value" class="headerlink" title="Filtering on a single value"></a>Filtering on a single value</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> UnitPrice &gt;=  <span class="number">75</span>;</div></pre></td></tr></tbody></table></figure>
+<h4 id="Checking-for-non-matches"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Checking-for-non-matches" class="headerlink" title="Checking for non-matches"></a>Checking for non-matches</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> ProductName &lt;&gt;  <span class="string">'Alice'</span>;</div></pre></td></tr></tbody></table></figure>
+<h4 id="Filtering-with-a-range-of-values-BETWEEN…AND…"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Filtering-with-a-range-of-values-BETWEEN%E2%80%A6AND%E2%80%A6" class="headerlink" title="Filtering with a range of values (BETWEEN…AND…)"></a>Filtering with a range of values (BETWEEN…AND…)</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> UnitsInStock <span class="keyword">BETWEEN</span> <span class="number">15</span> <span class="keyword">AND</span> <span class="number">80</span>;</div></pre></td></tr></tbody></table></figure>
+<h4 id="Filtering-no-value-NULL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Filtering-no-value-NULL" class="headerlink" title="Filtering no value (NULL)"></a>Filtering no value (NULL)</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> ProductName <span class="keyword">IS</span> <span class="literal">NULL</span>;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Advanced-filtering-IN-OR-and-NOT"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Advanced-filtering-IN-OR-and-NOT" class="headerlink" title="Advanced filtering: IN, OR, and NOT"></a>Advanced filtering: IN, OR, and NOT</h2><h3 id="IN-operator"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#IN-operator" class="headerlink" title="IN operator"></a>IN operator</h3><ul>
+<li>Specifies a range of conditions</li>
+<li>Comma delimited list of values</li>
+<li>Enclosed in ()</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductID</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> SupplierID <span class="keyword">IN</span> (<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>);</div></pre></td></tr></tbody></table></figure>
+<h3 id="OR-operator"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#OR-operator" class="headerlink" title="OR operator"></a>OR operator</h3><p>DBMS will not evaluate the second conditions in WHERE clause if the first condition is met.</p>
+<p>Use for any rows matching the specific conditions.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> ProductName =  <span class="string">'Tofu'</span> <span class="keyword">OR</span> <span class="string">'Konbu'</span>;</div></pre></td></tr></tbody></table></figure>
+<h3 id="IN-vs-OR"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#IN-vs-OR" class="headerlink" title="IN vs. OR"></a>IN vs. OR</h3><p>IN works the same as OR.</p>
+<p>Benfits of IN:</p>
+<ol>
+<li>Long list of options,</li>
+<li>IN executes faster than OR,</li>
+<li>Don’t have to think about the order with IN,</li>
+<li>Can contain another SELECT5</li>
+</ol>
+<h3 id="OR-with-AND"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#OR-with-AND" class="headerlink" title="OR with AND"></a>OR with AND</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> SupplierID =  <span class="number">9</span> <span class="keyword">OR</span> SupplierID =  <span class="number">11</span> <span class="keyword">AND</span> UnitPrice &gt; <span class="number">15</span>;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductName</div><div class="line">,UnitPrice</div><div class="line">,SupplierID</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> (SupplierID =  <span class="number">9</span> <span class="keyword">OR</span> SupplierID =  <span class="number">11</span>) <span class="keyword">AND</span> UnitPrice &gt; <span class="number">15</span>;</div></pre></td></tr></tbody></table></figure>
+<p>Don’t rely on the default order, it’s better to have the habit of using the ().</p>
+<h3 id="NOT-operator"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#NOT-operator" class="headerlink" title="NOT operator"></a>NOT operator</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> *</div><div class="line"><span class="keyword">FROM</span> Employees</div><div class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> City = <span class="string">'London'</span> <span class="keyword">AND</span> <span class="keyword">NOT</span> City = <span class="string">'Seattle'</span>;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Using-Wildcards-in-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Using-Wildcards-in-SQL" class="headerlink" title="Using Wildcards in SQL"></a>Using Wildcards in SQL</h2><ul>
+<li>Special character used to match parts of a value,</li>
+<li>Use <code>LIKE</code> Operator</li>
+</ul>
+<h3 id="What-are-wildcards"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#What-are-wildcards" class="headerlink" title="What are wildcards?"></a>What are wildcards?</h3><ul>
+<li>Can only be used with strings.</li>
+<li>Cannot be used for non-text datatype.</li>
+<li>Helpful for data scientists as they explore string variables.</li>
+</ul>
+<h3 id="Using-wildcards"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Using-wildcards" class="headerlink" title="Using % wildcards"></a>Using % wildcards</h3><p><img src="./SQL for Data Science - notes_files/wildcards1.png" alt="Operators"></p>
+<p><img src="./SQL for Data Science - notes_files/wildcards2.png" alt="Operators"></p>
+<ul>
+<li>% wildcards will not match NULLS, NULL represents no value in a column.</li>
+</ul>
+<h3 id="Using-underscore-wildcards"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Using-underscore-wildcards" class="headerlink" title="Using underscore(_) wildcards"></a>Using underscore(_) wildcards</h3><ul>
+<li>Matches a single character.</li>
+<li>Is not supported by DB2.</li>
+</ul>
+<h3 id="Downsides-of-wildcards"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Downsides-of-wildcards" class="headerlink" title="Downsides of wildcards"></a>Downsides of wildcards</h3><ul>
+<li>Takes longer to run.</li>
+<li>Better to use another operator (=, &lt;, &gt;=, and etc.)</li>
+<li>Statements with wildcards will take longer to run if used at the end of search pattern.</li>
+<li>Placement of wildcards is important.</li>
+</ul>
+<h2 id="Sorting-with-ORDER-BY"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Sorting-with-ORDER-BY" class="headerlink" title="Sorting with ORDER BY"></a>Sorting with <code>ORDER BY</code></h2><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> something</div><div class="line"><span class="keyword">FROM</span> <span class="keyword">database</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> characteristic;</div></pre></td></tr></tbody></table></figure>
+<ul>
+<li>Can sort by a column not retrieved</li>
+<li>Must always be the last clause in a select statement</li>
+</ul>
+<h3 id="Sorting-by-column-position"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Sorting-by-column-position" class="headerlink" title="Sorting by column position"></a>Sorting by column position</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ORDER BY 2,3;</div></pre></td></tr></tbody></table></figure>
+<p>It means data sorted by 2nd and 3rd column.</p>
+<h3 id="Sort-direction"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Sort-direction" class="headerlink" title="Sort direction"></a>Sort direction</h3><p><code>DESC</code>: descending order</p>
+<p><code>ASC</code>: ascending order</p>
+<p>Only applies to the column names it directly precedes.</p>
+<h2 id="Math-operators"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Math-operators" class="headerlink" title="Math operators"></a>Math operators</h2><table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>Addition</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Subtraction</td>
+</tr>
+<tr>
+<td>*</td>
+<td>Multiplication</td>
+</tr>
+<tr>
+<td>/</td>
+<td>Division</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Order-of-operators"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Order-of-operators" class="headerlink" title="Order of operators"></a>Order of operators</h3><ul>
+<li>Parenthese</li>
+<li>Exponents</li>
+<li>Multiplication</li>
+<li>Division</li>
+<li>Addition</li>
+<li>Subtraction</li>
+</ul>
+<h3 id="Use-parenthese-if-needed"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Use-parenthese-if-needed" class="headerlink" title="Use parenthese if needed"></a>Use parenthese if needed</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> ProductID</div><div class="line">,Quantity</div><div class="line">,UnitPrice</div><div class="line">,Discount</div><div class="line">,(UnitPrice - Discount) / Quantity <span class="keyword">AS</span> Total_Cost</div><div class="line"><span class="keyword">FROM</span> Orders;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Aggregate-Functions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Aggregate-Functions" class="headerlink" title="Aggregate Functions"></a>Aggregate Functions</h2><h3 id="What"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#What" class="headerlink" title="What?"></a>What?</h3><ul>
+<li>Used to summarize data</li>
+<li>Finding the highest and lowest values</li>
+<li>Finding the total number of rows</li>
+<li>Finding the average value</li>
+</ul>
+<h3 id="Functions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Functions" class="headerlink" title="Functions"></a>Functions</h3><p><img src="./SQL for Data Science - notes_files/aggregate.png" alt="Operators"></p>
+<h3 id="Average-function"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Average-function" class="headerlink" title="Average function"></a>Average function</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(UnitPrice) <span class="keyword">AS</span> avg_price</div><div class="line"><span class="keyword">FROM</span> products;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Count-functions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Count-functions" class="headerlink" title="Count functions"></a>Count functions</h3><p>1.COUNT(*) - Counts all rows (contain NULLs).</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> total_customers</div><div class="line"><span class="keyword">FROM</span> Customers;</div></pre></td></tr></tbody></table></figure>
+<p>2.COUNT(Column_name) - Counts all rows in a specific column ignoring NULL value. </p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(CustomerID) <span class="keyword">AS</span> total_customers</div><div class="line"><span class="keyword">FROM</span> Customers;</div></pre></td></tr></tbody></table></figure>
+<h3 id="MIN-and-MAX-functions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#MIN-and-MAX-functions" class="headerlink" title="MIN and MAX functions"></a>MIN and MAX functions</h3><p>Columns with NULL values are ignored by MIN and MAX functions.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(UnitPrice) <span class="keyword">AS</span> max_prod_price</div><div class="line">,<span class="keyword">MIN</span>(UnitPrice) <span class="keyword">AS</span> min_prod_price</div><div class="line"><span class="keyword">FROM</span> Products;</div></pre></td></tr></tbody></table></figure>
+<h3 id="SUM-aggregate-functions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#SUM-aggregate-functions" class="headerlink" title="SUM aggregate functions"></a>SUM aggregate functions</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(UnitPrice) <span class="keyword">AS</span> total_prod_price</div><div class="line"><span class="keyword">FROM</span> Products;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Using-DISTINCT-on-aggregate-functions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Using-DISTINCT-on-aggregate-functions" class="headerlink" title="Using DISTINCT on aggregate functions"></a>Using DISTINCT on aggregate functions</h3><ul>
+<li>If DISTINCT is not specified, ALL is assumed.</li>
+<li>Cannot use DISTINCT on COUNT(*).</li>
+<li>No value to use with MIN and MAX function.</li>
+</ul>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> CustomerID)</div><div class="line"><span class="keyword">FROM</span> Customers;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Grouping-Data-with-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Grouping-Data-with-SQL" class="headerlink" title="Grouping Data with SQL"></a>Grouping Data with SQL</h2><h3 id="Grouping-examples"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Grouping-examples" class="headerlink" title="Grouping examples"></a>Grouping examples</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">Region</div><div class="line">,<span class="keyword">COUNT</span>(CustomerID) <span class="keyword">AS</span> total_customers</div><div class="line"><span class="keyword">FROM</span> Customers</div><div class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Region;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Notices"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Notices" class="headerlink" title="Notices"></a>Notices</h3><ul>
+<li>GROUP BY clause can contain multiple columns.</li>
+<li>Every column in your SELECT statement must be present in a GROUP BY clause (except for aggregate functions).</li>
+<li>NULLs will be grouped together if your GROUP BY column contains NULLs.</li>
+</ul>
+<h3 id="HAVING-clause-filtering-for-groups"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#HAVING-clause-filtering-for-groups" class="headerlink" title="HAVING clause filtering for groups"></a>HAVING clause filtering for groups</h3><p>WHERE does not work for GROUP.</p>
+<p>WHERE filters on rows.</p>
+<p>Instead using HAVING clause to filter for groups.</p>
+<h3 id="HAVING-examples"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#HAVING-examples" class="headerlink" title="HAVING examples"></a>HAVING examples</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">CustomerID</div><div class="line">,<span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> orders</div><div class="line"><span class="keyword">FROM</span> Orders</div><div class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> CustomerID</div><div class="line"><span class="keyword">HAVING</span> <span class="keyword">COUNT</span>(*) &gt;=<span class="number">2</span>;</div></pre></td></tr></tbody></table></figure>
+<h3 id="WHERE-vs-HAVING"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#WHERE-vs-HAVING" class="headerlink" title="WHERE vs. HAVING"></a>WHERE vs. HAVING</h3><p>WHERE filters before data is grouped.</p>
+<p>HAVING filters after data is grouped.</p>
+<p>Rows elimated by WHERE clause will not be included in the group.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">SupplierID</div><div class="line">,<span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> Num_prod</div><div class="line"><span class="keyword">FROM</span> Products</div><div class="line"><span class="keyword">WHERE</span> UnitPrice &gt;= <span class="number">4</span></div><div class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> SupplierID</div><div class="line"><span class="keyword">HAVING</span> <span class="keyword">COUNT</span>(*) &gt;=<span class="number">2</span>;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Putting-it-all-together"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><h3 id="Filtering-is-useful"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Filtering-is-useful" class="headerlink" title="Filtering is useful"></a>Filtering is useful</h3><p>Narrow down your results.</p>
+<p>Increasing query &amp; application performance.</p>
+<p>Understanding your data:</p>
+<ul>
+<li>Finding specific values</li>
+<li>Finding a range of values</li>
+<li>Finding blank values</li>
+</ul>
+<h3 id="Key-SQL-clauses"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Key-SQL-clauses" class="headerlink" title="Key SQL clauses"></a>Key SQL clauses</h3><p><img src="./SQL for Data Science - notes_files/key.png" alt="Operators"></p>
+<h1 id="Week-3-Subqueries-and-joins-in-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Week-3-Subqueries-and-joins-in-SQL" class="headerlink" title="Week 3: Subqueries and joins in SQL"></a>Week 3: Subqueries and joins in SQL</h1><h2 id="Using-Subqueries"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Using-Subqueries" class="headerlink" title="Using Subqueries"></a>Using Subqueries</h2><h3 id="What-1"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#What-1" class="headerlink" title="What?"></a>What?</h3><ul>
+<li>Queries embedded into other queries</li>
+<li>Relational databases store data in multiple tables</li>
+<li>Subqueries merge data from multiple source together</li>
+<li>Helps with adding other filtering criteria</li>
+</ul>
+<h3 id="Example"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> CustomerID</div><div class="line">,CompanyName</div><div class="line">,Region</div><div class="line"><span class="keyword">FROM</span> Customers</div><div class="line"><span class="keyword">WHERE</span> customerID <span class="keyword">in</span> (<span class="keyword">SELECT</span> CustomerID</div><div class="line">		<span class="keyword">FROM</span> Orders</div><div class="line">		<span class="keyword">WHERE</span> Freight &gt; <span class="number">100</span>);</div></pre></td></tr></tbody></table></figure>
+<h3 id="Working-with-Subsequery-statements"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Working-with-Subsequery-statements" class="headerlink" title="Working with Subsequery statements"></a>Working with Subsequery statements</h3><p>Always perform the innermost SELECT portion first.</p>
+<p>DBMS is performing two operations</p>
+<ol>
+<li>Getting the order numbers for the product selected,</li>
+<li>Adding that to the WHERE clause and processing the overall SELECT statement.</li>
+</ol>
+<h2 id="Subquery-best-practices-and-considerations"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Subquery-best-practices-and-considerations" class="headerlink" title="Subquery best practices and considerations"></a>Subquery best practices and considerations</h2><ol>
+<li>There is no limit to the number of subqueries you can have.</li>
+<li>Performance slows when you nest too deeply.</li>
+<li>Subquery selects can only retrieve a single column.</li>
+</ol>
+<h3 id="Subquery-in-subquery"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Subquery-in-subquery" class="headerlink" title="Subquery in subquery"></a>Subquery in subquery</h3><p><strong>Be sure to use indenting.</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> customer_name</div><div class="line">,customer_state</div><div class="line">,(<span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> orders</div><div class="line">	<span class="keyword">FROM</span> Orders</div><div class="line">	<span class="keyword">WHERE</span> Orders.customer_id = Customer.customer_id) <span class="keyword">AS</span> orders</div><div class="line"><span class="keyword">FROM</span> Customers</div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Customer_name;</div></pre></td></tr></tbody></table></figure>
+<h3 id="The-power-of-subqueries"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#The-power-of-subqueries" class="headerlink" title="The power of subqueries"></a>The power of subqueries</h3><ul>
+<li>Subqueries are powerful tools</li>
+<li>Not always the best option due to performance</li>
+</ul>
+<h2 id="Joining-tables-an-introduction"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Joining-tables-an-introduction" class="headerlink" title="Joining tables: an introduction"></a>Joining tables: an introduction</h2><h3 id="Benefits-of-breaking-data-into-tables"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Benefits-of-breaking-data-into-tables" class="headerlink" title="Benefits of breaking data into tables"></a>Benefits of breaking data into tables</h3><ul>
+<li>Efficient storage</li>
+<li>Easier manipulation</li>
+<li>Greater scalability</li>
+<li>Logically models a process</li>
+<li>Tables are related through common values (keys)</li>
+</ul>
+<h3 id="Joins"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Joins" class="headerlink" title="Joins"></a>Joins</h3><ul>
+<li>Associate correct records from each table on the fly.</li>
+<li>Allows data retrieval from multiple tables in one query.</li>
+<li>Joins are not physical, they persist data for the duration of the query execution.</li>
+</ul>
+<h2 id="Cartesian-Cross-Joins"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Cartesian-Cross-Joins" class="headerlink" title="Cartesian (Cross) Joins"></a>Cartesian (Cross) Joins</h2><ul>
+<li>Not frequently used.</li>
+<li>Computationally taxing.</li>
+<li>Will return products with the incorrect vendor or no vendor at all.</li>
+</ul>
+<h3 id="Examples"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Examples" class="headerlink" title="Examples"></a>Examples</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> vendor_name</div><div class="line">,unit_price</div><div class="line">,company_name</div><div class="line"><span class="keyword">FROM</span> suppliers</div><div class="line"><span class="keyword">CROSS</span> <span class="keyword">JOIN</span> products;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> vendor_name</div><div class="line">,product_name</div><div class="line">,product_price</div><div class="line"><span class="keyword">FROM</span> Vendors,Products</div><div class="line"><span class="keyword">WHERE</span> Vendors.vendor_id = Products.vendor_id;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Inner-Joins"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Inner-Joins" class="headerlink" title="Inner Joins"></a>Inner Joins</h2><h3 id="What-2"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#What-2" class="headerlink" title="What?"></a>What?</h3><p>The INNER JOIN keyword selects records that have matching values in both tables.</p>
+<h3 id="Example-1"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Example-1" class="headerlink" title="Example"></a>Example</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> suppliers.CompanyName</div><div class="line">,ProductName</div><div class="line">,UnitPrice</div><div class="line"><span class="keyword">FROM</span> Suppliers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Products</div><div class="line"><span class="keyword">ON</span> Suppliers.supplierid = Products.supplierid;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Syntax"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Syntax" class="headerlink" title="Syntax"></a>Syntax</h3><ul>
+<li>Join type is specified (INNER JOIN)</li>
+<li>Join condition is in the FROM clause and uses ON clause</li>
+<li>Joining more tables together affects overall database performance</li>
+<li>You can join multiple tables, no limit</li>
+<li>List all the tables, then define conditions</li>
+</ul>
+<h3 id="Inner-Join-with-multiple-tables"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Inner-Join-with-multiple-tables" class="headerlink" title="Inner Join with multiple tables"></a>Inner Join with multiple tables</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> o.OrderID,</div><div class="line">c.CompanyName,</div><div class="line">e.LastName</div><div class="line"><span class="keyword">FROM</span> ((Orders o <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Customers c <span class="keyword">ON</span> o.CustomerID = c.CustomerID)</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> Employee e <span class="keyword">ON</span> o.EmployeeID = e.EmployeeID);</div></pre></td></tr></tbody></table></figure>
+<h3 id="Best-practices"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Best-practices" class="headerlink" title="Best practices"></a>Best practices</h3><ul>
+<li>Make sure you are pre-qualifying names</li>
+<li>Do not make unnecessary joins</li>
+<li>Think about the type if join you are making</li>
+</ul>
+<h2 id="Aliases-and-self-joins"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Aliases-and-self-joins" class="headerlink" title="Aliases and self joins"></a>Aliases and self joins</h2><h3 id="What-3"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#What-3" class="headerlink" title="What?"></a>What?</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> column_name</div><div class="line"><span class="keyword">FROM</span> table_name <span class="keyword">AS</span> alias_name;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Query-example-using-alias"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Query-example-using-alias" class="headerlink" title="Query example using alias"></a>Query example using alias</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> vendor_name</div><div class="line">,product_name</div><div class="line">,product_price</div><div class="line"><span class="keyword">FROM</span> Vendors <span class="keyword">AS</span> v, Products <span class="keyword">AS</span> p</div><div class="line"><span class="keyword">WHERE</span> v.vendor_id = p.vendor_id;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Self-joins"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Self-joins" class="headerlink" title="Self joins"></a>Self joins</h3><ul>
+<li>Match customers from the same city</li>
+<li>Take the table and treat it like two separate tables</li>
+<li>Join the original table to itself</li>
+</ul>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> column_names</div><div class="line"><span class="keyword">FROM</span> Table1 T1, Table2 T2</div><div class="line"><span class="keyword">WHERE</span> conditions;</div></pre></td></tr></tbody></table></figure>
+<h4 id="Examples-1"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Examples-1" class="headerlink" title="Examples"></a>Examples</h4><p>Matching the customers from the same city:</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> A.CustomerName <span class="keyword">AS</span> CustomerName1</div><div class="line">,B.CustomerName <span class="keyword">AS</span> CustomerName2</div><div class="line">,A.City</div><div class="line"><span class="keyword">FROM</span> Customers A, Customers B</div><div class="line"><span class="keyword">WHERE</span> A.CustomerID = B.CustomerID</div><div class="line"><span class="keyword">AND</span> A.City = B.City</div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> A.City;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Advanced-joins-Left-Right-and-Full-Outer-Joins"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Advanced-joins-Left-Right-and-Full-Outer-Joins" class="headerlink" title="Advanced joins: Left, Right and Full Outer Joins."></a>Advanced joins: Left, Right and Full Outer Joins.</h2><ul>
+<li>SQL Lite only does left joins,</li>
+<li>Other DBMS use all joins.</li>
+</ul>
+<h3 id="Left-Join"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Left-Join" class="headerlink" title="Left Join"></a>Left Join</h3><p>Return all records from the left table, and the matched records from the right table. </p>
+<p>The result is NULL from the right side, if there is no match.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> Persons.LastName, Persons.FirstName, Orders.OrderNo</div><div class="line"><span class="keyword">FROM</span> Persons</div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Orders</div><div class="line"><span class="keyword">ON</span> Persons.Id_P=Orders.Id_P</div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Persons.LastName</div></pre></td></tr></tbody></table></figure>
+<h3 id="Right-Join"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Right-Join" class="headerlink" title="Right Join"></a>Right Join</h3><p>Return all records from the right table, and the matched records from the left table. </p>
+<p>The result is NULL from the left side, if there is no match.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> Persons.LastName, Persons.FirstName, Orders.OrderNo</div><div class="line"><span class="keyword">FROM</span> Persons</div><div class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> Orders</div><div class="line"><span class="keyword">ON</span> Persons.Id_P=Orders.Id_P</div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Persons.LastName</div></pre></td></tr></tbody></table></figure>
+<p>Left Joins can be turned into right joins by reversing the order of tables.</p>
+<h3 id="Full-Outer-Join"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Full-Outer-Join" class="headerlink" title="Full Outer Join"></a>Full Outer Join</h3><p>Return all records when there is a match in either left table or right table records.</p>
+<p>Select all customers and orders:</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> Persons.LastName, Persons.FirstName, Orders.OrderNo</div><div class="line"><span class="keyword">FROM</span> Persons</div><div class="line"><span class="keyword">FULL</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Orders</div><div class="line"><span class="keyword">ON</span> Persons.Id_P=Orders.Id_P</div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Persons.LastName</div></pre></td></tr></tbody></table></figure>
+<h2 id="Unions"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Unions" class="headerlink" title="Unions"></a>Unions</h2><ul>
+<li><p>The UNION operator is used to combine the result-set of two or more SELECT statements.</p>
+</li>
+<li><p>Each SELECT statement with UNION must have the same number of columns.</p>
+</li>
+<li>Columns must have similar data types.</li>
+<li>The columns in each SELECT statement must be in the same order.</li>
+</ul>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> column_name(s) <span class="keyword">FROM</span> table1</div><div class="line"><span class="keyword">UNION</span></div><div class="line"><span class="keyword">SELECT</span> column_name(s) <span class="keyword">FROM</span> table2;</div></pre></td></tr></tbody></table></figure>
+<h3 id="Note"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Note" class="headerlink" title="Note"></a>Note</h3><ul>
+<li>UNION selects only distinct values. </li>
+<li>Use UNION ALL to also select duplicate values!</li>
+</ul>
+<h3 id="Avoiding-duplicate-in-a-Union"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Avoiding-duplicate-in-a-Union" class="headerlink" title="Avoiding duplicate in a Union"></a>Avoiding duplicate in a Union</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> table1</div><div class="line"><span class="keyword">WHERE</span> a = X</div><div class="line"><span class="keyword">UNION</span> ALL</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> table2</div><div class="line"><span class="keyword">WHERE</span> b = Y <span class="keyword">AND</span> a!=X;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Summary"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Summary" class="headerlink" title="Summary"></a>Summary</h2><h3 id="Best-practices-using-joins"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Best-practices-using-joins" class="headerlink" title="Best practices using joins"></a>Best practices using joins</h3><ul>
+<li>Check the number of records.</li>
+<li>Check for duplicates.</li>
+<li>Check the number of records each time you make a new join.</li>
+<li>Start smart: one table at a time.</li>
+</ul>
+<h3 id="Join-syntax"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Join-syntax" class="headerlink" title="Join syntax"></a>Join syntax</h3><ul>
+<li>Check the particular syntax for your DBMS.</li>
+<li>SQLite does not do RIGHT and FULL OUTER joins.</li>
+</ul>
+<p><img src="./SQL for Data Science - notes_files/joins.png" alt="Joins"></p>
+<h2 id="Further-readings"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Further-readings" class="headerlink" title="Further readings"></a>Further readings</h2><ol>
+<li><a href="https://blog.sqlauthority.com/2009/03/11/sql-server-difference-between-union-vs-union-all-optimal-performance-comparison/" target="_blank" rel="external">Difference Between Union and Union All - Optimal Performance Comparison</a></li>
+<li><a href="https://blog.modeanalytics.com/learning-python-sql/" target="_blank" rel="external">Thinking in SQL vs Thinking in Python</a></li>
+</ol>
+<h2 id="Module-3-Coding-Assignment"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Module-3-Coding-Assignment" class="headerlink" title="Module 3 Coding Assignment"></a>Module 3 Coding Assignment</h2><p>All of the questions in this quiz refer to the open source Chinook Database. Please familiarize yourself with the ER diagram in order to familiarize yourself with the table and column names in order to write accurate queries and get the appropriate answers.</p>
+<p><img src="./SQL for Data Science - notes_files/ChinookDatabaseSchema.png" alt="Joins"></p>
+<h3 id="1-Using-a-subquery-find-the-names-of-all-the-tracks-for-the-album-“Californication”"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#1-Using-a-subquery-find-the-names-of-all-the-tracks-for-the-album-%E2%80%9CCalifornication%E2%80%9D" class="headerlink" title="1. Using a subquery, find the names of all the tracks for the album “Californication”."></a>1. Using a subquery, find the names of all the tracks for the album “Californication”.</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">Name</span></div><div class="line"><span class="keyword">FROM</span> Tracks</div><div class="line"><span class="keyword">WHERE</span> AlbumId <span class="keyword">IN</span> (</div><div class="line"><span class="keyword">SELECT</span> AlbumId</div><div class="line"><span class="keyword">FROM</span> Albums</div><div class="line"><span class="keyword">WHERE</span> Title = <span class="string">"Californication"</span>);</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">+-------------------+</div><div class="line">| Name              |</div><div class="line">+-------------------+</div><div class="line">| Around The World  |</div><div class="line">| Parallel Universe |</div><div class="line">| Scar Tissue       |</div><div class="line">| Otherside         |</div><div class="line">| Get On Top        |</div><div class="line">| Californication   |</div><div class="line">| Easily            |</div><div class="line">| Porcelain         |</div><div class="line">| Emit Remmus       |</div><div class="line">| I Like Dirt       |</div><div class="line">+-------------------+</div><div class="line">(Output limit exceeded, 10 of 15 total rows shown)</div></pre></td></tr></tbody></table></figure>
+<h3 id="2-Find-the-total-number-of-invoices-for-each-customer-along-with-the-customer’s-full-name-city-and-email"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#2-Find-the-total-number-of-invoices-for-each-customer-along-with-the-customer%E2%80%99s-full-name-city-and-email" class="headerlink" title="2. Find the total number of invoices for each customer along with the customer’s full name, city and email."></a>2. Find the total number of invoices for each customer along with the customer’s full name, city and email.</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> Email,City,FirstName,</div><div class="line">(<span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*)</div><div class="line"><span class="keyword">FROM</span> Invoices</div><div class="line"><span class="keyword">WHERE</span> Invoices.CustomerId = Customers.CustomerId) <span class="keyword">AS</span> Numbers</div><div class="line"><span class="keyword">FROM</span> Customers;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">+--------------------------+---------------------+-----------+---------+</div><div class="line">| Email                    | City                | FirstName | Numbers |</div><div class="line">+--------------------------+---------------------+-----------+---------+</div><div class="line">| luisg@embraer.com.br     | São José dos Campos | Luís      |       7 |</div><div class="line">| leonekohler@surfeu.de    | Stuttgart           | Leonie    |       7 |</div><div class="line">| ftremblay@gmail.com      | Montréal            | François  |       7 |</div><div class="line">| bjorn.hansen@yahoo.no    | Oslo                | Bjørn     |       7 |</div><div class="line">| frantisekw@jetbrains.com | Prague              | František |       7 |</div><div class="line">| hholy@gmail.com          | Prague              | Helena    |       7 |</div><div class="line">| astrid.gruber@apple.at   | Vienne              | Astrid    |       7 |</div><div class="line">| daan_peeters@apple.be    | Brussels            | Daan      |       7 |</div><div class="line">| kara.nielsen@jubii.dk    | Copenhagen          | Kara      |       7 |</div><div class="line">| eduardo@woodstock.com.br | São Paulo           | Eduardo   |       7 |</div><div class="line">+--------------------------+---------------------+-----------+---------+</div><div class="line">(Output limit exceeded, 10 of 59 total rows shown)</div></pre></td></tr></tbody></table></figure>
+<h3 id="3-Retrieve-the-track-name-album-artist-and-trackID-for-all-the-albums"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#3-Retrieve-the-track-name-album-artist-and-trackID-for-all-the-albums" class="headerlink" title="3. Retrieve the track name, album, artist, and trackID for all the albums."></a>3. Retrieve the track name, album, artist, and trackID for all the albums.</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> Tracks.Name, Tracks.trackID, Albums.Title, Albums.ArtistId</div><div class="line"><span class="keyword">FROM</span> Albums</div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Tracks</div><div class="line"><span class="keyword">ON</span> Albums.AlbumId = Tracks.AlbumId;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">+-----------------------------------------+---------+---------------------------------------+----------+</div><div class="line">| Name                                    | TrackId | Title                                 | ArtistId |</div><div class="line">+-----------------------------------------+---------+---------------------------------------+----------+</div><div class="line">| For Those About To Rock (We Salute You) |       1 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Put The Finger On You                   |       6 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Let's Get It Up                         |       7 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Inject The Venom                        |       8 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Snowballed                              |       9 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Evil Walks                              |      10 | For Those About To Rock We Salute You |        1 |</div><div class="line">| C.O.D.                                  |      11 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Breaking The Rules                      |      12 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Night Of The Long Knives                |      13 | For Those About To Rock We Salute You |        1 |</div><div class="line">| Spellbound                              |      14 | For Those About To Rock We Salute You |        1 |</div><div class="line">+-----------------------------------------+---------+---------------------------------------+----------+</div><div class="line">(Output limit exceeded, 10 of 3503 total rows shown)</div></pre></td></tr></tbody></table></figure>
+<h3 id="4-Retrieve-a-list-with-the-managers-last-name-and-the-last-name-of-the-employees-who-report-to-him-or-her"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#4-Retrieve-a-list-with-the-managers-last-name-and-the-last-name-of-the-employees-who-report-to-him-or-her" class="headerlink" title="4. Retrieve a list with the managers last name, and the last name of the employees who report to him or her."></a>4. Retrieve a list with the managers last name, and the last name of the employees who report to him or her.</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> e1.LastName <span class="keyword">AS</span> manager</div><div class="line">, e2.LastName <span class="keyword">AS</span> employee</div><div class="line"><span class="keyword">FROM</span> Employees e1, Employees e2</div><div class="line"><span class="keyword">WHERE</span> e1.EmployeeId = e2.ReportsTo;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">+----------+----------+</div><div class="line">| manager  | employee |</div><div class="line">+----------+----------+</div><div class="line">| Adams    | Edwards  |</div><div class="line">| Adams    | Mitchell |</div><div class="line">| Edwards  | Peacock  |</div><div class="line">| Edwards  | Park     |</div><div class="line">| Edwards  | Johnson  |</div><div class="line">| Mitchell | King     |</div><div class="line">| Mitchell | Callahan |</div><div class="line">+----------+----------+</div></pre></td></tr></tbody></table></figure>
+<h3 id="5-Find-the-name-and-ID-of-the-artists-who-do-not-have-albums"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#5-Find-the-name-and-ID-of-the-artists-who-do-not-have-albums" class="headerlink" title="5. Find the name and ID of the artists who do not have albums."></a>5. Find the name and ID of the artists who do not have albums.</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> Artists.Name, Artists.ArtistId</div><div class="line"><span class="keyword">FROM</span> Artists</div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Albums</div><div class="line"><span class="keyword">ON</span> Artists.ArtistId = Albums.ArtistId</div><div class="line"><span class="keyword">WHERE</span> Albums.AlbumId <span class="keyword">IS</span> <span class="literal">NULL</span>;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">+----------------------------+----------+</div><div class="line">| Name                       | ArtistId |</div><div class="line">+----------------------------+----------+</div><div class="line">| Milton Nascimento &amp; Bebeto |       25 |</div><div class="line">| Azymuth                    |       26 |</div><div class="line">| João Gilberto              |       28 |</div><div class="line">| Bebel Gilberto             |       29 |</div><div class="line">| Jorge Vercilo              |       30 |</div><div class="line">| Baby Consuelo              |       31 |</div><div class="line">| Ney Matogrosso             |       32 |</div><div class="line">| Luiz Melodia               |       33 |</div><div class="line">| Nando Reis                 |       34 |</div><div class="line">| Pedro Luís &amp; A Parede      |       35 |</div><div class="line">+----------------------------+----------+</div><div class="line">(Output limit exceeded, 10 of 71 total rows shown)</div></pre></td></tr></tbody></table></figure>
+<h3 id="6-Use-a-UNION-to-create-a-list-of-all-the-employee’s-amp-customer’s-first-names-and-last-names-ordered-by-the-last-name-in-descending-order"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#6-Use-a-UNION-to-create-a-list-of-all-the-employee%E2%80%99s-amp-customer%E2%80%99s-first-names-and-last-names-ordered-by-the-last-name-in-descending-order" class="headerlink" title="6. Use a UNION to create a list of all the employee’s &amp; customer’s first names and last names ordered by the last name in descending order."></a>6. Use a UNION to create a list of all the employee’s &amp; customer’s first names and last names ordered by the last name in descending order.</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> FirstName,LastName</div><div class="line"><span class="keyword">FROM</span> Employees</div><div class="line"><span class="keyword">UNION</span></div><div class="line"><span class="keyword">SELECT</span> FirstName,LastName</div><div class="line"><span class="keyword">FROM</span> Customers</div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> LastName <span class="keyword">DESC</span>;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">+-----------+--------------+</div><div class="line">| FirstName | LastName     |</div><div class="line">+-----------+--------------+</div><div class="line">| Fynn      | Zimmermann   |</div><div class="line">| Stanisław | Wójcik       |</div><div class="line">| František | Wichterlová  |</div><div class="line">| Johannes  | Van der Berg |</div><div class="line">| François  | Tremblay     |</div><div class="line">| Mark      | Taylor       |</div><div class="line">| Ellie     | Sullivan     |</div><div class="line">| Victor    | Stevens      |</div><div class="line">| Puja      | Srivastava   |</div><div class="line">| Jack      | Smith        |</div><div class="line">+-----------+--------------+</div><div class="line">(Output limit exceeded, 10 of 67 total rows shown)</div></pre></td></tr></tbody></table></figure>
+<h3 id="7-See-if-there-are-any-customers-who-have-a-different-city-listed-in-their-billing-city-versus-their-customer-city"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#7-See-if-there-are-any-customers-who-have-a-different-city-listed-in-their-billing-city-versus-their-customer-city" class="headerlink" title="7. See if there are any customers who have a different city listed in their billing city versus their customer city."></a>7. See if there are any customers who have a different city listed in their billing city versus their customer city.</h3><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*)</div><div class="line"><span class="keyword">FROM</span> Customers</div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Invoices</div><div class="line"><span class="keyword">ON</span> Customers.CustomerId = Invoices.CustomerId</div><div class="line"><span class="keyword">WHERE</span> Customers.City &lt;&gt; Invoices.BillingCity;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+----------+</div><div class="line">| COUNT(*) |</div><div class="line">+----------+</div><div class="line">|        0 |</div><div class="line">+----------+</div></pre></td></tr></tbody></table></figure>
+<h1 id="Week-4-Modifying-and-analyzing-data-with-SQL"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Week-4-Modifying-and-analyzing-data-with-SQL" class="headerlink" title="Week 4: Modifying and analyzing data with SQL"></a>Week 4: Modifying and analyzing data with SQL</h1><h2 id="Working-with-text-strings"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Working-with-text-strings" class="headerlink" title="Working with text strings"></a>Working with text strings</h2><p>Retrieve the data in the format you need</p>
+<p>Support Joins</p>
+<p>String Functions:</p>
+<ul>
+<li>Concatenations</li>
+</ul>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">CompanyName</div><div class="line">,ContactName</div><div class="line">,CompanyName || <span class="string">'('</span> || ContactName || <span class="string">')'</span></div><div class="line"><span class="keyword">FROM</span> customers;</div></pre></td></tr></tbody></table></figure>
+<p><strong>SQL server</strong> supports <strong>+</strong> instead of ||</p>
+<ul>
+<li>Trimming strings</li>
+</ul>
+<p>Trims the leading or trailing space from a string</p>
+<p>TRIM<br><br>RTRIM<br><br>LTRIM<br></p>
+<ul>
+<li>Substring</li>
+</ul>
+<p>Returns the specified number of characters from a particular position of a given strings.</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SUBSTR(string name, string position, number of characters to be returned)</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> firstname</div><div class="line">,<span class="keyword">SUBSTR</span>(firstname,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line"><span class="keyword">FROM</span> employees;</div></pre></td></tr></tbody></table></figure>
+<ul>
+<li>Upper and Lower</li>
+</ul>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">UPPER</span>(column_name) <span class="keyword">FROM</span> tablename;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">LOWER</span>(column_name) <span class="keyword">FROM</span> tablename;</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">UCASE</span>(column_name) <span class="keyword">FROM</span> tablename;</div></pre></td></tr></tbody></table></figure>
+<h2 id="Working-with-date-and-time-strings"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Working-with-date-and-time-strings" class="headerlink" title="Working with date and time strings"></a>Working with date and time strings</h2><ul>
+<li>Dates are stored as datetypes</li>
+<li>Each DBMS uses it’s own variety of datetypes</li>
+</ul>
+<p>DATE: Format YYYY-MM-DD</p>
+<p>DATETIME: Format YYYY-MM-DD HH:MI:SS</p>
+<p>TIMESTAMP: Format YYYY-MM-DD HH:MI:SS</p>
+<h2 id="Date-and-time-string"><a href="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/#Date-and-time-string" class="headerlink" title="Date and time string"></a>Date and time string</h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="./SQL for Data Science - notes_files/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="./SQL for Data Science - notes_files/qrcode.php" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="https://shipengfei92.github.io/2018/03/12/Javascript-Getting-started/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          JavaScript_Getting started
+        
+      </div>
+    </a>
+  
+  
+    <a href="https://shipengfei92.github.io/2018/01/25/Notes-for-HFT/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Notes for "All about high-frequency trading"</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="SQL-for-data-science" data-title="notes for Coursera - SQL for data science" data-url="https://shipengfei92.github.io/2018/02/05/SQL-for-data-science/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"shipengfei92"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		© 2019 Pengfei Shi
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: false
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="./SQL for Data Science - notes_files/main.234bc0.js.download"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config;executed=true">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="./SQL for Data Science - notes_files/MathJax.js.download" id="">
+</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, &#39;innerArchive&#39;)"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, &#39;friends&#39;)"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, &#39;aboutme&#39;)"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive" style="display: none;">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)" style="display: none;"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags" style="display: none;">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Deep Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cloud Computing</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">SODA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Leetcode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-High-frequency Trading</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">HFT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">hackerrank</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">hotkeys</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px; display: none;">
+            缺失模块。<br>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            2、在根目录_config.yml里添加配置：
+</p><pre style="font-size: 12px; display: none;" q-show="jsonFail">  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          <p></p>
+          <li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/06/09/notes-for-hotkeys/"><i class="icon-quo-left icon"></i><span q-text="title">notes for hotkeys</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-06-09</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#hotkeys</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/06/07/Keras-switch-backend/"><i class="icon-quo-left icon"></i><span q-text="title">Keras-switch-backend</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-06-07</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/06/07/GAN-learning-1/"><i class="icon-quo-left icon"></i><span q-text="title">GAN-learning-1</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-06-07</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/06/07/Useful-tools/"><i class="icon-quo-left icon"></i><span q-text="title">Useful tools</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-06-07</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/05/13/Methodology/"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-05-13</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/04/08/Some-Basic-knowledge-for-programming/"><i class="icon-quo-left icon"></i><span q-text="title">Some Basic knowledge for programming </span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-04-08</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/04/07/Leetcode/"><i class="icon-quo-left icon"></i><span q-text="title">Leetcode</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-04-07</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Leetcode</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/03/31/Glossary-of-Conformal-Geometry-Related/"><i class="icon-quo-left icon"></i><span q-text="title">Glossary of Conformal Geometry Related</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-03-31</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Conformal Geometry</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/03/31/What-is-conformal-or-holomorphic/"><i class="icon-quo-left icon"></i><span q-text="title">What is conformal or holomorphic</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-03-31</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Conformal Geometry</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/03/29/Notes-for-write-Markdown-File/"><i class="icon-quo-left icon"></i><span q-text="title">Notes for write Markdown File</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-03-29</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Blog</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2017/03/28/Using-HEXO-to-write-blogs/"><i class="icon-quo-left icon"></i><span q-text="title">Using HEXO to write blogs</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2017-03-28</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Blog</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2016/08/19/Install-Tensorflow-from-Source-Code/"><i class="icon-quo-left icon"></i><span q-text="title">Install Tensorflow from Source Code</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2016-08-19</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Deep Learning</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2016/04/25/Play-distributed-Tensorflow-with-GPU-accelerated/"><i class="icon-quo-left icon"></i><span q-text="title">Play distributed Tensorflow with GPU accelerated</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2016-04-25</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Deep Learning</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2016/03/07/Play-Tricircle-with-virtualbox/"><i class="icon-quo-left icon"></i><span q-text="title">Play Tricircle with virtualbox</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2016-03-07</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#Cloud Computing</span><!--q-repeat-->
+            </p>
+          </li><li class="search-li" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title" href="https://shipengfei92.github.io/2015/11/15/SODA-git-and-spark/"><i class="icon-quo-left icon"></i><span q-text="title">SODA git and spark</span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat">2015-11-15</span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-on="click:choseTag(e, name)" q-text="name|tagformat">#SODA</span><!--q-repeat-->
+            </p>
+          </li><!--q-repeat-->
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends" style="display: none;">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/shipengfei92" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>老旧的CSDN博客</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme" style="display: none;">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme"><br>上海交通大学研究生在读<br>对新鲜事物感兴趣<br>云计算<br>深度学习<br>数据分析</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div><script src="./SQL for Data Science - notes_files/slider.885efe.js.download"></script>
+
+</body></html>
